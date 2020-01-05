@@ -58,7 +58,7 @@ aug = ImageDataGenerator(
 
 
 
-
+# Create models
 model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3),input_shape=(128, 128, 3), activation='relu', ))
 model.add(tf.keras.layers.MaxPool2D(pool_size=(3, 3)))
