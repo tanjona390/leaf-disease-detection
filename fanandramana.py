@@ -46,6 +46,7 @@ image_labels = label_binarizer.fit_transform(label_list)
 pickle.dump(label_binarizer, open('label_transform.pk1', 'wb'))
 n_classes = len(label_binarizer.classes_)
 
+# Split train and test for data and labels
 x_train, x_test, y_train, y_test = train_test_split(np_images, image_labels, test_size=0.2 )
 aug = ImageDataGenerator(
         rotation_range=25,
@@ -58,8 +59,9 @@ aug = ImageDataGenerator(
 
 
 
-# Create models
+# Create model sequential 
 model = tf.keras.models.Sequential()
+# Convolutional 
 model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3),input_shape=(128, 128, 3), activation='relu', ))
 model.add(tf.keras.layers.MaxPool2D(pool_size=(3, 3)))
 model.add(tf.keras.layers.Conv2D(64, kernel_size=(3, 3), activation='relu'))
@@ -67,9 +69,10 @@ model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
 model.add(tf.keras.layers.Conv2D(128, kernel_size=(3, 3),  activation='relu'))
 model.add(tf.keras.layers.MaxPool2D(pool_size=(2, 2)))
 
-
+# Flatten
 model.add(tf.keras.layers.Flatten())
 
+# Fully connected layers 
 model.add(tf.keras.layers.Dense(256, activation='relu'))
 model.add(tf.keras.layers.Dense(128, activation='relu'))
 model.add(tf.keras.layers.Dense(len(CATEGORIES), activation='softmax'))
